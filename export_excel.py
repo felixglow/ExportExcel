@@ -7,7 +7,7 @@ __author__ = 'felix'
 
 import datetime
 import xlwt
-import StringIO
+import cStringIO
 
 from django.db.models.query import QuerySet, ValuesQuerySet
 from django.http import HttpResponse
@@ -15,7 +15,7 @@ from django.http import HttpResponse
 
 class ExcelResponse(HttpResponse):
     """
-    execl文件导出
+    excel文件导出
     支持xls和csv格式文件
     支持多sheet页导出
     """
@@ -47,9 +47,9 @@ class ExcelResponse(HttpResponse):
                     tmp_data.insert(0, headers[n])
                 sheet_data.append(tmp_data)
 
-        output = StringIO.StringIO()
+        output = cStringIO.StringIO()
         for n, data in enumerate(sheet_data):
-            if len(data) > 65536:
+            if len(data) < 65536:
                 book = xlwt.Workbook(encoding=encoding)
                 sheet = book.add_sheet(sheet_name[n] if sheet_name else 'Sheet ' + str(n+1))
                 styles = {'datetime': xlwt.easyxf(num_format_str='yyyy-mm-dd hh:mm:ss'),
