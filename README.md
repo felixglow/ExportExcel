@@ -4,7 +4,7 @@
 
 用途:
 ----
-    Django中Http Response返回execl文件或csv文件
+    Django中Http Response返回execl文件或csv文件(根据数据量判断)
     支持自定义文件名称
     支持生成多sheet页 自定义sheet页名称
     支持导入模板生成
